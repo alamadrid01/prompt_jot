@@ -1,0 +1,39 @@
+{  
+      "manifest_version": 3,
+      "name": "Prompt Jot",
+      "description": "A simple, minimalist note taker for browser",
+      "version": "1.0.0",
+      "web_accessible_resources": [
+        {
+          "resources": ["data/*", "images/*"],
+          "matches": ["https://chat.openai.com/*", "https://bard.google.com/*", "https://claude.ai/*", "http://localhost:3000/*", "https://prompteasy.co/*"]
+        }
+      ],
+      "content_scripts": [
+        {
+          "js": ["dist/main.js"],
+          "css": ["css/style.css", "dist/style.css"],
+          "matches": ["http://localhost:3000/*"],
+          "run_at": "document_idle"
+        }
+      ],
+      "externally_connectable": {
+        "matches": ["https://prompteasy.co/*", "http://localhost:3000/*"]
+      },
+      "host_permissions": ["https://chat.openai.com/*"],
+      "action": {
+        "default_title": "Click here to visit Prompt Jot",
+        "default_popup": "popup.html"
+      },
+      "background": {
+        "service_worker": "dist/background.js"
+      },
+      "permissions": ["storage", "contextMenus", "tabs", "activeTab"],
+      "icons": {
+        "16": "images/c_16.png",
+        "32": "images/c_32.png",
+        "48": "images/c_48.png",
+        "128": "images/c_128.png"
+      }
+    }
+    
