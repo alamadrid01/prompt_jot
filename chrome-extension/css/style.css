@@ -1,0 +1,9 @@
+:root {
+  --palette-background: #FFFFFF;
+  --palette-foreground: #000000;
+  --palette-gray: #efefef;
+  --palette-shadow: '#000'
+}
+html{
+      font-family: 'Work Sans';
+}
