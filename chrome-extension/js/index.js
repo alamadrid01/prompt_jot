@@ -19,10 +19,45 @@ function getNotesFromStorage() {
     });
 }
 
+const documents = [
+    {
+      id: 1,
+      title: 'Moby Dick',
+      text: 'Call me Ishmael. Some years ago...',
+      category: 'fiction'
+    },
+    {
+      id: 2,
+      title: 'Zen and the Art of Motorcycle Maintenance',
+      text: 'I can see by my watch...',
+      category: 'fiction'
+    },
+    {
+      id: 3,
+      title: 'Neuromancer',
+      text: 'The sky above the port was...',
+      category: 'fiction'
+    },
+    {
+      id: 4,
+      title: 'Zen and the Art of Archery',
+      text: 'At first sight it must seem...',
+      category: 'non-fiction'
+    }]
+
+
+const search = new MiniSearch({
+    fields: ['title', 'content'],
+    storeFields: ['title', 'content', 'date']
+});
 
 async function showInterface (){
     try {
         notesArray = await getNotesFromStorage();
+
+        if(notesArray.length > 0){
+            search.addAll(notesArray);
+        }
     } catch (error) {
         console.error('Failed to load notes:', error);
     }
@@ -37,8 +72,10 @@ const popup = `
                     <div class="rounded-full w-3 h-3 bg-yellow-600"></div>
                     <div class="rounded-full w-3 h-3 bg-green-600"></div>
                 </div>
-                <div class="flex cursor-pointer w-5 h-5"> 
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="search"><path fill="#717884" d="M21.71,20.29,18,16.61A9,9,0,1,0,16.61,18l3.68,3.68a1,1,0,0,0,1.42,0A1,1,0,0,0,21.71,20.29ZM11,18a7,7,0,1,1,7-7A7,7,0,0,1,11,18Z"></path></svg>
+                
+                <div class="flex items-center cursor-pointer"> 
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" id="searchNote"><path fill="#717884" d="M21.71,20.29,18,16.61A9,9,0,1,0,16.61,18l3.68,3.68a1,1,0,0,0,1.42,0A1,1,0,0,0,21.71,20.29ZM11,18a7,7,0,1,1,7-7A7,7,0,0,1,11,18Z"></path></svg>
+                    <input id="searchInput" type="text" placeholder="Search notes..." class="text-sm ml-1.5 hidden bg-transparent outline-none border-b border-slate-400 text-slate-700" />
                 </div>
             </div>
 
@@ -187,6 +224,7 @@ function showInterfaceMain () {
         const pingGuy = window.document.getElementById('ping-guy');
         const saveButton = window.document.getElementById('save');
         const deleteButton = window.document.getElementById('trash-alt');
+        const searchButton = window.document.getElementById('searchNote')
 
         const pingGuyInsert = () =>{
             if(pingGuy.classList.contains('inline-flex')){
@@ -222,6 +260,39 @@ function showInterfaceMain () {
                 note.addEventListener('click', handleclick)
             })
         }
+
+
+        searchButton.addEventListener('click', () => {
+            const searchInput = window.document.getElementById('searchInput');
+
+            if(searchInput.classList.contains('hidden')){
+                searchInput.classList.remove('hidden');
+                searchInput.focus();
+            }
+        })
+
+        searchInput.addEventListener('input', (e) => {
+            const searchResults = search.search(e.target.value, {prefix: true, fuzzy: 0.2});
+
+            if(searchResults.length === 0) return
+
+            const noteSpread = window.document.getElementById('note-spread');
+
+            noteSpread.innerHTML = searchResults.map(note => `
+                <div id=${note.id} class="flex px-2 py-2 select-none note-item relative cursor-pointer gap-4 items-center">
+                    <p class="text-xs absolute right-1 top-2 text-slate-600">${formatDistanceToNow(new Date(note.id), {suffix: true})}</p>
+                    <div class="flex flex-col gap-1.5">
+                        <h1 class="text-base text-slate-800 font-semibold">${note.title}</h1>
+                        <p class="text-sm leading-5 text-slate-600">${note.content.slice(0, 83)}</p>
+                    </div>
+                </div>
+            `).join('');
+
+            noteItems = window.document.querySelectorAll('.note-item')
+                noteItems.forEach(note => {
+                    note.addEventListener('click', handleclick)
+                }) 
+        })
 
 
         deleteButton.addEventListener('click', () => {
@@ -262,6 +333,7 @@ function showInterfaceMain () {
                 noteItems.forEach(note => {
                     note.addEventListener('click', handleclick)
                 }) 
+                // search.addAll(notesArray);
                 newNote.id = newNoteObj.id;
 
                 pingGuyRemove();
