@@ -5,6 +5,7 @@ import {formatDistanceToNow} from 'date-fns';
 
 let notesArray = []
 const body = window.document.body;
+let noteItems = window.document.querySelectorAll('.note-item') || []
 
 function getNotesFromStorage() {
     return new Promise((resolve, reject) => {
@@ -12,7 +13,6 @@ function getNotesFromStorage() {
             if (chrome.runtime.lastError) {
                 reject(chrome.runtime.lastError);
             } else {
-                console.log('this is the data received', data.notes)
                 resolve(data.notes || []);
             }
         });
@@ -87,7 +87,7 @@ const popup = `
                         <svg class="cursor-pointer w-[20px] h-[20px]" xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 0 24 24" id="save"><path fill="white" stroke="white" stroke-width="0.4" d="m20.71 9.29-6-6a1 1 0 0 0-.32-.21A1.09 1.09 0 0 0 14 3H6a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3v-8a1 1 0 0 0-.29-.71ZM9 5h4v2H9Zm6 14H9v-3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1Zm4-1a1 1 0 0 1-1 1h-1v-3a3 3 0 0 0-3-3h-4a3 3 0 0 0-3 3v3H6a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V6.41l4 4Z"></path></svg>
                     </div>
 
-                    <svg class="class-pointer w-[20px] h-[20px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"  id="trash-alt"><path fill="white" stroke="white" stroke-width="0.4" d="M10,18a1,1,0,0,0,1-1V11a1,1,0,0,0-2,0v6A1,1,0,0,0,10,18ZM20,6H16V5a3,3,0,0,0-3-3H11A3,3,0,0,0,8,5V6H4A1,1,0,0,0,4,8H5V19a3,3,0,0,0,3,3h8a3,3,0,0,0,3-3V8h1a1,1,0,0,0,0-2ZM10,5a1,1,0,0,1,1-1h2a1,1,0,0,1,1,1V6H10Zm7,14a1,1,0,0,1-1,1H8a1,1,0,0,1-1-1V8H17Zm-3-1a1,1,0,0,0,1-1V11a1,1,0,0,0-2,0v6A1,1,0,0,0,14,18Z"></path></svg>
+                    <svg class="cursor-pointer w-[20px] h-[20px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"  id="trash-alt"><path fill="white" stroke="white" stroke-width="0.4" d="M10,18a1,1,0,0,0,1-1V11a1,1,0,0,0-2,0v6A1,1,0,0,0,10,18ZM20,6H16V5a3,3,0,0,0-3-3H11A3,3,0,0,0,8,5V6H4A1,1,0,0,0,4,8H5V19a3,3,0,0,0,3,3h8a3,3,0,0,0,3-3V8h1a1,1,0,0,0,0-2ZM10,5a1,1,0,0,1,1-1h2a1,1,0,0,1,1,1V6H10Zm7,14a1,1,0,0,1-1,1H8a1,1,0,0,1-1-1V8H17Zm-3-1a1,1,0,0,0,1-1V11a1,1,0,0,0-2,0v6A1,1,0,0,0,14,18Z"></path></svg>
                 </div>
 
         </div>
@@ -101,7 +101,6 @@ function handleclick(e) {
     const id = Number(e.currentTarget.id);
     const note = document.getElementById(id);
     const isSelected = note.dataset.selected === 'true';
-
 
     const noteTitle = document.getElementById('note-title');
     const noteContent = document.getElementById('note-content');
@@ -155,6 +154,14 @@ function handleclick(e) {
     }
 
 
+function handleDeleteNote(id) {
+    notesArray = notesArray.filter(note => note.id !== id);
+    chrome.storage.sync.set({ notes: notesArray }, () => {
+        console.log('Note deleted');
+    });
+}
+
+
 function showInterfaceMain () {
     let mainContainer = window.document.createElement('div');
     mainContainer.id = 'mainContainerJot';
@@ -179,6 +186,7 @@ function showInterfaceMain () {
         const noteDate = window.document.getElementById('note-date');
         const pingGuy = window.document.getElementById('ping-guy');
         const saveButton = window.document.getElementById('save');
+        const deleteButton = window.document.getElementById('trash-alt');
 
         const pingGuyInsert = () =>{
             if(pingGuy.classList.contains('inline-flex')){
@@ -206,7 +214,7 @@ function showInterfaceMain () {
            handleNewNote(noteTitle, noteContent, noteDate, pingGuy);
         }
 
-        const noteItems = window.document.querySelectorAll('.note-item')
+        noteItems = window.document.querySelectorAll('.note-item')
         if(noteItems){
             const button = window.document.getElementById('buttons-list')
             button.style.backgroundColor = 'rgb(168 161 135)';
@@ -215,13 +223,27 @@ function showInterfaceMain () {
             })
         }
 
+
+        deleteButton.addEventListener('click', () => {
+            const selectedNote = window.document.querySelector('.note-item[data-selected="true"]');
+            if(selectedNote){
+                const id = Number(selectedNote.id);
+                handleDeleteNote(id);
+                selectedNote.remove();
+                noteTitle.value = '';
+                noteContent.value = '';
+            }else{
+                return;
+            }
+        })
+
+
         saveButton.addEventListener('click', () => {
             const newNote = window.document.getElementById('new-note');
-            // const noteSpread = window.document.getElementById('note-spread');
             const newNoteTitle = newNote.children[1].children[0].textContent;
             const newNoteContent = newNote.children[1].children[1].textContent;
 
-            console.log('after clicked', newNoteTitle, newNoteContent, noteDate.textContent)
+            // console.log('after clicked', newNoteTitle, newNoteContent, noteDate.textContent)
 
             if(newNote){
                 const newNoteObj = {
@@ -233,8 +255,14 @@ function showInterfaceMain () {
 
                 notesArray.unshift(newNoteObj);
                 chrome.storage.sync.set({notes: notesArray}, () => {
-                    console.log('this is the notes array', notesArray)
+                    console.log('A note has been saved')
                 })
+
+                noteItems = window.document.querySelectorAll('.note-item')
+                noteItems.forEach(note => {
+                    note.addEventListener('click', handleclick)
+                }) 
+                newNote.id = newNoteObj.id;
 
                 pingGuyRemove();
             }else{
