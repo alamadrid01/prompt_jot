@@ -1,0 +1,32 @@
+[
+    {
+    "id": "first-note",
+      "title": "Meeting with Bob",
+      "content": "Discuss the project updates and deadlines. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam nec odio nec urna fermentum congue. Nullam nec suscipit neque. Nulla facilisi. Donec ac vestibulum augue, ac tincidunt purus. Donec aliquam, urna in mollis ultricies, turpis sapien lacinia nunc, nec fringilla purus lorem nec metus. Nullam nec suscipit neque. Nulla facilisi. Donec ac vestibulum augue, ac tincidunt purus. Donec aliquam, urna in mollis ultricies, turpis sapien lacinia nunc, nec fringilla purus lorem nec metus.",
+      "date": "2024-06-03"
+    },
+    {
+        "id": "second-note",
+      "title": "Grocery Shopping",
+      "content": "Buy milk, bread, eggs, and cheese. nec odio nec urna fermentum congue. Nullam nec suscipit neque. Nulla facilisi. Donec ac vestibulum augue, ac tincidunt purus. Donec aliquam, urna in mollis ultricies, turpis sapien lacinia nunc, nec fringilla purus lorem nec metus. Nullam nec suscipit neque. Nulla facilisi. Donec ac vestibulum augue, ac tincidunt purus. Donec aliquam, urna in mollis ultricies, turpis sapien lacinia nunc, nec fringilla purus lorem nec metus",
+      "date": "2024-06-04"
+    },
+    {
+        "id": "third-note",
+      "title": "Workout Session",
+      "content": "Morning workout session at the gym. nec odio nec urna fermentum congue. Nullam nec suscipit neque. Nulla facilisi. Donec ac vestibulum augue, ac tincidunt purus. Donec aliquam, urna in mollis ultricies, turpis sapien lacinia nunc, nec fringilla purus lorem nec metus. Nullam nec suscipit neque. Nulla facilisi. Donec ac vestibulum augue, ac tincidunt purus. Donec aliquam, urna in mollis ultricies, turpis sapien lacinia nunc, nec fringilla purus lorem nec metus",
+      "date": "2024-06-05"
+    },
+    {
+        "id": "fourth-note",
+      "title": "Dentist Appointment",
+      "content": "Routine dental check-up at 10 AM.nec odio nec urna fermentum congue. Nullam nec suscipit neque. Nulla facilisi. Donec ac vestibulum augue, ac tincidunt purus. Donec aliquam, urna in mollis ultricies, turpis sapien lacinia nunc, nec fringilla purus lorem nec metus. Nullam nec suscipit neque. Nulla facilisi. Donec ac vestibulum augue, ac tincidunt purus. Donec aliquam, urna in mollis ultricies, turpis sapien lacinia nunc, nec fringilla purus lorem nec metus",
+      "date": "2024-06-06"
+    },
+    {
+        "id": "fifth-note",
+      "title": "Read New Book",
+      "content": "Start reading 'The Great Gatsby'. nec odio nec urna fermentum congue. Nullam nec suscipit neque. Nulla facilisi. Donec ac vestibulum augue, ac tincidunt purus. Donec aliquam, urna in mollis ultricies, turpis sapien lacinia nunc, nec fringilla purus lorem nec metus. Nullam nec suscipit neque. Nulla facilisi. Donec ac vestibulum augue, ac tincidunt purus. Donec aliquam, urna in mollis ultricies, turpis sapien lacinia nunc, nec fringilla purus lorem nec metus",
+      "date": "2024-06-07"
+    }
+]

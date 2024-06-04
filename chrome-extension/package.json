@@ -43,6 +43,7 @@
     "webextension-polyfill": "^0.10.0"
   },
   "dependencies": {
+    "date-fns": "^3.6.0",
     "lighterhtml": "^4.2.0",
     "minisearch": "^6.0.1"
   }
