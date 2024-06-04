@@ -20,24 +20,3 @@ Prompt Jot is a note-taking application designed to streamline the process of ca
     ├── .gitignore
     ├── README.md
     └── package.json
-
- .
-    ├── dist-electron
-    │   ├── db                                         
-    |   │   └── index.js                      # DB connection and methods
-    │   ├── main                                         
-    |   │   └── index.js                      # Electron-Main
-    │   └── preload    
-    |   │   └── index.js                      # Preload-Scripts
-    └── dist
-    |   └── index.html                        # Electron-Renderer(ReactJS build)
-.
-├── dist-electron
-│   ├── db                                         
-|   │   └── index.js                      # DB connection and methods
-│   ├── main                                         
-|   │   └── index.js                      # Electron-Main
-│   └── preload    
-|   │   └── index.js                      # Preload-Scripts
-└── dist
-|   └── index.html                        # Electron-Renderer(ReactJS build)
