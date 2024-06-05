@@ -7168,11 +7168,15 @@
                 note.style.borderRadius = '10px';
 
                 // This only works for saved data in the storage
-                // noteTitle.value = notesArray.find(note => note.id === id).title;
-                // noteContent.value = notesArray.find(note => note.id === id).content;
+                noteTitle.value = notesArray.find(function (note) {
+                  return note.id === id;
+                }).title;
+                noteContent.value = notesArray.find(function (note) {
+                  return note.id === id;
+                }).content;
 
-                noteTitle.value = note.children[1].children[0].textContent;
-                noteContent.value = note.children[1].children[1].textContent;
+                // noteTitle.value = note.children[1].children[0].textContent;
+                // noteContent.value = note.children[1].children[1].textContent;
               }
             };
             _context.prev = 6;
@@ -7190,7 +7194,7 @@
             _context.t0 = _context["catch"](6);
             console.error('Failed to load notes:', _context.t0);
           case 16:
-            popup = "\n    <div class=\"w-[1100px] h-[700px] flex gap-8\" >\n        <div class=\"w-[50%]  h-full flex-col py-4 px-3 bg-[#e2dabe] rounded-xl\">\n            <div class=\"flex items-center justify-between\">\n                <div class=\"flex gap-1.5\"> \n                    <div class=\"rounded-full w-3 h-3 bg-red-600\"></div>\n                    <div class=\"rounded-full w-3 h-3 bg-yellow-600\"></div>\n                    <div class=\"rounded-full w-3 h-3 bg-green-600\"></div>\n                </div>\n                \n                <div class=\"flex items-center cursor-pointer\"> \n                    <svg xmlns=\"http://www.w3.org/2000/svg\" class=\"w-5 h-5\" viewBox=\"0 0 24 24\" id=\"searchNote\"><path fill=\"#717884\" d=\"M21.71,20.29,18,16.61A9,9,0,1,0,16.61,18l3.68,3.68a1,1,0,0,0,1.42,0A1,1,0,0,0,21.71,20.29ZM11,18a7,7,0,1,1,7-7A7,7,0,0,1,11,18Z\"></path></svg>\n                    <input id=\"searchInput\" type=\"text\" placeholder=\"Search notes...\" class=\"text-sm ml-1.5 hidden bg-transparent outline-none border-b border-slate-400 text-slate-700\" />\n                </div>\n            </div>\n\n            <div class=\"flex justify-between mt-6 items-center\">\n                <div class=\"flex gap-3 items-center\">\n                    <div class=\"rounded-full w-3 h-3 bg-blue-600\"></div>\n                    <h2 class=\"text-xl text-slate-700 font-semibold\">Work</h2>\n                </div>\n                <svg class='cursor-pointer'width=\"20\" height\"20\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" id=\"plus\"><path fill=\"#717884\" d=\"M19,11H13V5a1,1,0,0,0-2,0v6H5a1,1,0,0,0,0,2h6v6a1,1,0,0,0,2,0V13h6a1,1,0,0,0,0-2Z\"></path></svg>\n            </div>\n\n            <div id=\"note-spread\" class=\"flex flex-col gap-7 mt-5\">\n                ".concat(notesArray.length > 0 || notesArray !== undefined ? notesArray.map(function (note) {
+            popup = "\n    <div class=\"w-[1100px] h-[700px] flex gap-8\" >\n        <div class=\"w-[50%] overflow-y-scroll  h-full flex-col py-4 px-3 bg-[#e2dabe] rounded-xl custom-scrollbar\">\n            <div class=\"flex items-center justify-between\">\n                <div class=\"flex gap-1.5\"> \n                    <div class=\"rounded-full w-3 h-3 bg-red-600\"></div>\n                    <div class=\"rounded-full w-3 h-3 bg-yellow-600\"></div>\n                    <div class=\"rounded-full w-3 h-3 bg-green-600\"></div>\n                </div>\n                \n                <div class=\"flex items-center cursor-pointer\"> \n                    <svg xmlns=\"http://www.w3.org/2000/svg\" class=\"w-5 h-5\" viewBox=\"0 0 24 24\" id=\"searchNote\"><path fill=\"#717884\" d=\"M21.71,20.29,18,16.61A9,9,0,1,0,16.61,18l3.68,3.68a1,1,0,0,0,1.42,0A1,1,0,0,0,21.71,20.29ZM11,18a7,7,0,1,1,7-7A7,7,0,0,1,11,18Z\"></path></svg>\n                    <input id=\"searchInput\" type=\"text\" placeholder=\"Search notes...\" class=\"text-sm ml-1.5 hidden bg-transparent outline-none border-b border-slate-400 text-slate-700\" />\n                </div>\n            </div>\n\n            <div class=\"flex justify-between mt-6 items-center\">\n                <div class=\"flex gap-3 items-center\">\n                    <div class=\"rounded-full w-3 h-3 bg-blue-600\"></div>\n                    <h2 class=\"text-xl text-slate-700 font-semibold\">Work</h2>\n                </div>\n                <svg class='cursor-pointer'width=\"20\" height\"20\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" id=\"plus\"><path fill=\"#717884\" d=\"M19,11H13V5a1,1,0,0,0-2,0v6H5a1,1,0,0,0,0,2h6v6a1,1,0,0,0,2,0V13h6a1,1,0,0,0,0-2Z\"></path></svg>\n            </div>\n\n            <div id=\"note-spread\" class=\"flex flex-col gap-7 mt-5\">\n                ".concat(notesArray.length > 0 || notesArray !== undefined ? notesArray.map(function (note) {
               return "\n                    <div id=".concat(note.id, " class=\"flex px-2 py-2 select-none note-item relative cursor-pointer gap-4 items-center\">\n                    <p class=\"text-xs absolute right-1 top-2 text-slate-600\">").concat(formatDistanceToNow(new Date(note.id), {
                 suffix: true
               }), "</p>\n                    <div class=\"flex flex-col gap-1.5\">\n                        <h1 class=\"text-base text-slate-800 font-semibold\">").concat(note.title, "</h1>\n                        <p class=\"text-sm leading-5 text-slate-600\">").concat(note.content.slice(0, 83), "</p>\n                    </div>\n                    </div>\n                ");
