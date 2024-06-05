@@ -174,7 +174,8 @@ function handleClick(e) {
             const noteSpread = window.document.getElementById('note-spread');
             const newNote = window.document.createElement('div');
 
-            newNote.id = 'new-note';
+            // newNote.id = 'new-note';
+            newNote.id = Date.now();
             newNote.classList.add('flex', 'px-2', 'py-2', 'select-none', 'note-item', 'relative', 'cursor-pointer', 'gap-4', 'items-center');
             newNote.innerHTML = `
                 <p id="newNoteDate" class="text-xs absolute right-1 top-2 text-slate-600">
@@ -227,6 +228,7 @@ function saveNote() {
     const selectedNote = document.querySelector('.note-item[data-selected="true"]');
     let id;
     selectedNote.id === 'new-note' ? id = Date.now() : id = Number(selectedNote.id);
+
 
     console.log(id)
 
@@ -363,7 +365,14 @@ function showInterfaceMain () {
 
 
         saveButton.addEventListener('click', () => {
-            const newNote = window.document.getElementById('new-note');
+            let newNote;
+            for(let i = 0; i < noteItems.length; i++){
+                if(noteItems[i].dataset.selected === 'true'){
+                    newNote = noteItems[i];
+                }else{
+                    continue;
+                }
+            }
             const newNoteTitle = newNote.children[1].children[0].textContent;
             const newNoteContent = newNote.children[1].children[1].textContent;
 
@@ -411,6 +420,7 @@ function showInterfaceMain () {
 
                 pingGuyInsert(); 
             }else{
+                noteItems = window.document.querySelectorAll('.note-item')
                 for(let i = 0; i < noteItems.length; i++){
                     if(noteItems[i].dataset.selected === 'true'){
                         noteItems[i].children[1].children[0].innerHTML = e.target.value;
@@ -427,6 +437,7 @@ function showInterfaceMain () {
                 newNoteCreate.children[1].children[1].innerHTML = e.target.value;
                 pingGuyInsert();
             }else{
+                noteItems = window.document.querySelectorAll('.note-item')
                 for(let i = 0; i < noteItems.length; i++){
                     if(noteItems[i].dataset.selected === 'true'){
                         noteItems[i].children[1].children[1].innerHTML = e.target.value;

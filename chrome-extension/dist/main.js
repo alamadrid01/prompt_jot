@@ -6971,7 +6971,14 @@
                   }
                 });
                 saveButton.addEventListener('click', function () {
-                  var newNote = window.document.getElementById('new-note');
+                  var newNote;
+                  for (var i = 0; i < noteItems.length; i++) {
+                    if (noteItems[i].dataset.selected === 'true') {
+                      newNote = noteItems[i];
+                    } else {
+                      continue;
+                    }
+                  }
                   var newNoteTitle = newNote.children[1].children[0].textContent;
                   var newNoteContent = newNote.children[1].children[1].textContent;
                   if (newNote) {
@@ -7013,6 +7020,7 @@
                     newNoteCreate.children[1].children[0].innerHTML = e.target.value;
                     pingGuyInsert();
                   } else {
+                    noteItems = window.document.querySelectorAll('.note-item');
                     for (var i = 0; i < noteItems.length; i++) {
                       if (noteItems[i].dataset.selected === 'true') {
                         noteItems[i].children[1].children[0].innerHTML = e.target.value;
@@ -7028,6 +7036,7 @@
                     newNoteCreate.children[1].children[1].innerHTML = e.target.value;
                     pingGuyInsert();
                   } else {
+                    noteItems = window.document.querySelectorAll('.note-item');
                     for (var i = 0; i < noteItems.length; i++) {
                       if (noteItems[i].dataset.selected === 'true') {
                         noteItems[i].children[1].children[1].innerHTML = e.target.value;
@@ -7106,7 +7115,9 @@
               noteTitle.focus();
               var noteSpread = window.document.getElementById('note-spread');
               var newNote = window.document.createElement('div');
-              newNote.id = 'new-note';
+
+              // newNote.id = 'new-note';
+              newNote.id = Date.now();
               newNote.classList.add('flex', 'px-2', 'py-2', 'select-none', 'note-item', 'relative', 'cursor-pointer', 'gap-4', 'items-center');
               newNote.innerHTML = "\n                <p id=\"newNoteDate\" class=\"text-xs absolute right-1 top-2 text-slate-600\">\n                    ".concat(formatDistanceToNow(new Date(), {
                 addSuffix: true
