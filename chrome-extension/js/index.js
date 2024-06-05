@@ -34,6 +34,12 @@ async function showInterface (){
         console.error('Failed to load notes:', error);
     }
 
+    const maxLength = 85;
+    const ellipsis = "...";
+
+    const truncateText = (text, maxLength) => {
+        return text.length > maxLength ? text.slice(0, maxLength) + ellipsis : text;
+    };
 
 const popup = `
     <div class="w-[1100px] h-[700px] flex gap-8" >
@@ -65,7 +71,7 @@ const popup = `
                     <p class="text-xs absolute right-1 top-2 text-slate-600">${formatDistanceToNow(new Date(note.id), {suffix: true})}</p>
                     <div class="flex flex-col gap-1.5">
                         <h1 class="text-base text-slate-800 font-semibold">${note.title}</h1>
-                        <p class="text-sm leading-5 text-slate-600">${note.content.slice(0, 83)}</p>
+                        <p class="text-sm leading-5 text-slate-600">${truncateText(note.content, 85)}</p>
                     </div>
                     </div>
                 `).join('') : 
@@ -88,7 +94,7 @@ const popup = `
             
             <div id="interfaceSecondPallet" class="hidden flex-col">
                 <p id='note-date' class="text-sm text-slate-600 mt-4font-medium">May, 10, 2024 at 6:18pm </p>
-                <input maxlength="30" placeholder="Title here..." type="text" id="note-title" class="text-3xl placeholder:text-slate-500/90 w-full font-serif bg-transparent outline-none border-none mt-2 text-slate-800 font-semibold" />
+                <input maxlength="50" placeholder="Title here..." type="text" id="note-title" class="text-3xl placeholder:text-slate-500/90 w-full font-serif bg-transparent outline-none border-none mt-2 text-slate-800 font-semibold" />
                 <textarea rows=10 cols=40 placeholder="write here..." type="text" id="note-content" class="text-base w-full resize-none bg-transparent outline-none border-none text-slate-700 leading-9 mt-4"></textarea>
 
                     <div id="buttons-list" class="flex items-center gap-6 absolute py-2 px-8 rounded-[25px] bottom-3 left-[35%]">
@@ -148,8 +154,8 @@ function handleClick(e) {
             note.style.borderRadius = '0';
         });
         note.dataset.selected = 'true';
-        note.style.backgroundColor = 'rgb(168 161 135)';
-        note.style.borderRadius = '10px';
+        note.style.backgroundColor = 'rgb(192 184 155 / 63%)';
+        note.style.borderRadius = '8px';
 
         // This only works for saved data in the storage
         noteTitle.value = notesArray.find(note => note.id === id).title;
@@ -208,7 +214,6 @@ function handleDeleteNote(id) {
 }
 
 function debounce(callback, delay) {
-    console.log('i am in debounce')
     let timeout;
 
     return function () {
@@ -251,6 +256,7 @@ function saveNote() {
 }
 
 const debouncedSaveNote = debounce(saveNote, 1000);
+
 
 function showInterfaceMain () {
     let mainContainer = window.document.createElement('div');
@@ -423,7 +429,7 @@ function showInterfaceMain () {
                 noteItems = window.document.querySelectorAll('.note-item')
                 for(let i = 0; i < noteItems.length; i++){
                     if(noteItems[i].dataset.selected === 'true'){
-                        noteItems[i].children[1].children[0].innerHTML = e.target.value;
+                        noteItems[i].children[1].children[0].innerHTML = e.target.value.slice(0, 20);
                         pingGuyInsert();
                     }
                 }
@@ -440,7 +446,7 @@ function showInterfaceMain () {
                 noteItems = window.document.querySelectorAll('.note-item')
                 for(let i = 0; i < noteItems.length; i++){
                     if(noteItems[i].dataset.selected === 'true'){
-                        noteItems[i].children[1].children[1].innerHTML = e.target.value;
+                        noteItems[i].children[1].children[1].innerHTML = truncateText(e.target.value, maxLength);
                         pingGuyInsert();
                     }
                 }
