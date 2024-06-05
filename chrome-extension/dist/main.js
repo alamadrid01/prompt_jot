@@ -6878,7 +6878,7 @@
   }
   function _showInterface() {
     _showInterface = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-      var popup, handleclick, handleNewNote, handleDeleteNote, showInterfaceMain;
+      var popup, handleClick, handleNewNote, handleDeleteNote, showInterfaceMain;
       return _regeneratorRuntime().wrap(function _callee$(_context) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
@@ -6935,7 +6935,7 @@
                   var button = window.document.getElementById('buttons-list');
                   button.style.backgroundColor = 'rgb(168 161 135)';
                   noteItems.forEach(function (note) {
-                    note.addEventListener('click', handleclick);
+                    note.addEventListener('click', handleClick);
                   });
                 }
                 searchButton.addEventListener('click', function () {
@@ -6959,7 +6959,7 @@
                   }).join('');
                   noteItems = window.document.querySelectorAll('.note-item');
                   noteItems.forEach(function (note) {
-                    note.addEventListener('click', handleclick);
+                    note.addEventListener('click', handleClick);
                   });
                 });
                 deleteButton.addEventListener('click', function () {
@@ -6968,8 +6968,7 @@
                     var id = Number(selectedNote.id);
                     handleDeleteNote(id);
                     selectedNote.remove();
-                    noteTitle.value = '';
-                    noteContent.value = '';
+                    handleClick(id);
                   } else {
                     return;
                   }
@@ -6978,9 +6977,6 @@
                   var newNote = window.document.getElementById('new-note');
                   var newNoteTitle = newNote.children[1].children[0].textContent;
                   var newNoteContent = newNote.children[1].children[1].textContent;
-
-                  // console.log('after clicked', newNoteTitle, newNoteContent, noteDate.textContent)
-
                   if (newNote) {
                     var newNoteObj = {
                       id: Date.now(),
@@ -6994,10 +6990,7 @@
                     }, function () {
                       console.log('A note has been saved');
                     });
-                    noteItems = window.document.querySelectorAll('.note-item');
-                    noteItems.forEach(function (note) {
-                      note.addEventListener('click', handleclick);
-                    });
+
                     // search.addAll(notesArray);
                     newNote.id = newNoteObj.id;
                     pingGuyRemove();
@@ -7058,10 +7051,11 @@
               pingGuy.classList.remove('hidden');
               pingGuy.classList.add('inline-flex');
               noteSpread.insertBefore(newNote, noteSpread.firstChild);
+              newNote.addEventListener('click', handleClick);
             };
-            handleclick = function _handleclick(e) {
+            handleClick = function _handleClick(e) {
               e.stopPropagation();
-              var id = Number(e.currentTarget.id);
+              var id = Number(e.currentTarget.id) || e.target.id;
               var note = document.getElementById(id);
               var isSelected = note.dataset.selected === 'true';
               var noteTitle = document.getElementById('note-title');
@@ -7077,15 +7071,16 @@
                 noteTitle.value = '';
                 noteContent.value = '';
               } else {
+                document.querySelectorAll('.note-item').forEach(function (note) {
+                  note.dataset.selected = 'false';
+                  note.style.backgroundColor = 'transparent';
+                  note.style.borderRadius = '0';
+                });
                 note.dataset.selected = 'true';
                 note.style.backgroundColor = 'rgb(168 161 135)';
                 note.style.borderRadius = '10px';
-                noteTitle.value = notesArray.find(function (note) {
-                  return note.id === id;
-                }).title;
-                noteContent.value = notesArray.find(function (note) {
-                  return note.id === id;
-                }).content;
+                noteTitle.value = note.children[1].children[0].textContent;
+                noteContent.value = note.children[1].children[1].textContent;
               }
             };
             _context.prev = 4;

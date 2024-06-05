@@ -19,33 +19,6 @@ function getNotesFromStorage() {
     });
 }
 
-const documents = [
-    {
-      id: 1,
-      title: 'Moby Dick',
-      text: 'Call me Ishmael. Some years ago...',
-      category: 'fiction'
-    },
-    {
-      id: 2,
-      title: 'Zen and the Art of Motorcycle Maintenance',
-      text: 'I can see by my watch...',
-      category: 'fiction'
-    },
-    {
-      id: 3,
-      title: 'Neuromancer',
-      text: 'The sky above the port was...',
-      category: 'fiction'
-    },
-    {
-      id: 4,
-      title: 'Zen and the Art of Archery',
-      text: 'At first sight it must seem...',
-      category: 'non-fiction'
-    }]
-
-
 const search = new MiniSearch({
     fields: ['title', 'content'],
     storeFields: ['title', 'content', 'date']
@@ -54,7 +27,6 @@ const search = new MiniSearch({
 async function showInterface (){
     try {
         notesArray = await getNotesFromStorage();
-
         if(notesArray.length > 0){
             search.addAll(notesArray);
         }
@@ -133,9 +105,11 @@ const popup = `
 
 
 
-function handleclick(e) {
+function handleClick(e) {
     e.stopPropagation();
-    const id = Number(e.currentTarget.id);
+
+    const id = Number(e.currentTarget.id) || e.target.id;
+    
     const note = document.getElementById(id);
     const isSelected = note.dataset.selected === 'true';
 
@@ -152,11 +126,16 @@ function handleclick(e) {
         noteTitle.value = '';
         noteContent.value = '';
     } else {
+        document.querySelectorAll('.note-item').forEach(note => {
+            note.dataset.selected = 'false';
+            note.style.backgroundColor = 'transparent';
+            note.style.borderRadius = '0';
+        });
         note.dataset.selected = 'true';
         note.style.backgroundColor = 'rgb(168 161 135)';
         note.style.borderRadius = '10px';
-        noteTitle.value = notesArray.find(note => note.id === id).title;
-        noteContent.value = notesArray.find(note => note.id === id).content;
+        noteTitle.value = note.children[1].children[0].textContent;
+        noteContent.value = note.children[1].children[1].textContent;
     }
   }
 
@@ -188,6 +167,8 @@ function handleclick(e) {
             pingGuy.classList.remove('hidden');
             pingGuy.classList.add('inline-flex');
             noteSpread.insertBefore(newNote, noteSpread.firstChild);
+
+            newNote.addEventListener('click', handleClick);
     }
 
 
@@ -257,7 +238,7 @@ function showInterfaceMain () {
             const button = window.document.getElementById('buttons-list')
             button.style.backgroundColor = 'rgb(168 161 135)';
             noteItems.forEach(note => {
-                note.addEventListener('click', handleclick)
+                note.addEventListener('click', handleClick)
             })
         }
 
@@ -290,7 +271,7 @@ function showInterfaceMain () {
 
             noteItems = window.document.querySelectorAll('.note-item')
                 noteItems.forEach(note => {
-                    note.addEventListener('click', handleclick)
+                    note.addEventListener('click', handleClick)
                 }) 
         })
 
@@ -301,8 +282,7 @@ function showInterfaceMain () {
                 const id = Number(selectedNote.id);
                 handleDeleteNote(id);
                 selectedNote.remove();
-                noteTitle.value = '';
-                noteContent.value = '';
+                handleClick(id);
             }else{
                 return;
             }
@@ -313,8 +293,6 @@ function showInterfaceMain () {
             const newNote = window.document.getElementById('new-note');
             const newNoteTitle = newNote.children[1].children[0].textContent;
             const newNoteContent = newNote.children[1].children[1].textContent;
-
-            // console.log('after clicked', newNoteTitle, newNoteContent, noteDate.textContent)
 
             if(newNote){
                 const newNoteObj = {
@@ -329,10 +307,6 @@ function showInterfaceMain () {
                     console.log('A note has been saved')
                 })
 
-                noteItems = window.document.querySelectorAll('.note-item')
-                noteItems.forEach(note => {
-                    note.addEventListener('click', handleclick)
-                }) 
                 // search.addAll(notesArray);
                 newNote.id = newNoteObj.id;
 
