@@ -6998,6 +6998,13 @@
                 var plus = window.document.getElementById('plus');
                 plus.addEventListener('click', function () {
                   console.log('it has been clicked');
+                  var newInterfaceSecondPallet = document.getElementById('newInterfaceSecondPallet');
+                  var interfaceSecondPallet = document.getElementById('interfaceSecondPallet');
+                  if (interfaceSecondPallet.classList.contains('hidden')) {
+                    newInterfaceSecondPallet.classList.add('hidden');
+                    interfaceSecondPallet.classList.remove('hidden');
+                    interfaceSecondPallet.classList.add('flex');
+                  }
                   handleNewNote(noteTitle, noteContent, noteDate, pingGuy);
                 });
                 noteTitle.addEventListener('input', function (e) {
@@ -7041,7 +7048,8 @@
               var noteDate = document.getElementById('note-date');
               var pingGuy = document.getElementById('ping-guy');
               var selectedNote = document.querySelector('.note-item[data-selected="true"]');
-              var id = Number(selectedNote.id);
+              var id;
+              selectedNote.id === 'new-note' ? id = Date.now() : id = Number(selectedNote.id);
               console.log(id);
               var updatedNote = {
                 id: id,
@@ -7052,8 +7060,7 @@
               var index = notesArray.findIndex(function (note) {
                 return note.id === id;
               });
-              notesArray[index] = updatedNote;
-              console.log('about to save');
+              index !== -1 ? notesArray[index] = updatedNote : notesArray.unshift(updatedNote);
               chrome.storage.sync.set({
                 notes: notesArray
               }, function () {
@@ -7104,6 +7111,12 @@
               newNote.innerHTML = "\n                <p id=\"newNoteDate\" class=\"text-xs absolute right-1 top-2 text-slate-600\">\n                    ".concat(formatDistanceToNow(new Date(), {
                 addSuffix: true
               }), "\n                </p>\n                <div class=\"flex flex-col gap-1.5\">\n                    <h1 class=\"text-base text-slate-800 font-semibold\">New Note</h1>\n                    <p class=\"text-sm leading-5 text-slate-600\">Write here...</p>\n                </div>\n            ");
+              for (var i = 0; i < noteItems.length; i++) {
+                noteItems[i].dataset.selected = 'false';
+                noteItems[i].style.backgroundColor = 'transparent';
+                noteItems[i].style.borderRadius = '0';
+              }
+              newNote.dataset.selected = 'true';
               pingGuy.classList.remove('hidden');
               pingGuy.classList.add('inline-flex');
               noteSpread.insertBefore(newNote, noteSpread.firstChild);

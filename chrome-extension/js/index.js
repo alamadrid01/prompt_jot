@@ -185,6 +185,12 @@ function handleClick(e) {
                     <p class="text-sm leading-5 text-slate-600">Write here...</p>
                 </div>
             `
+            for (let i = 0; i < noteItems.length; i++) {
+                noteItems[i].dataset.selected = 'false';
+                noteItems[i].style.backgroundColor = 'transparent';
+                noteItems[i].style.borderRadius = '0';
+            }
+            newNote.dataset.selected = 'true';
             pingGuy.classList.remove('hidden');
             pingGuy.classList.add('inline-flex');
             noteSpread.insertBefore(newNote, noteSpread.firstChild);
@@ -219,7 +225,9 @@ function saveNote() {
     const pingGuy = document.getElementById('ping-guy');
 
     const selectedNote = document.querySelector('.note-item[data-selected="true"]');
-    const id = Number(selectedNote.id) 
+    let id;
+    selectedNote.id === 'new-note' ? id = Date.now() : id = Number(selectedNote.id);
+
     console.log(id)
 
     const updatedNote = {
@@ -230,9 +238,7 @@ function saveNote() {
     };
 
     const index = notesArray.findIndex(note => note.id === id);
-    notesArray[index] = updatedNote;
-
-    console.log('about to save')
+    index !== -1 ? notesArray[index] = updatedNote : notesArray.unshift(updatedNote);
 
     chrome.storage.sync.set({ notes: notesArray }, () => {
         console.log('Note saved');
@@ -386,6 +392,14 @@ function showInterfaceMain () {
         const plus = window.document.getElementById('plus');
         plus.addEventListener('click', () => {
             console.log('it has been clicked')
+            const newInterfaceSecondPallet = document.getElementById('newInterfaceSecondPallet');
+            const interfaceSecondPallet = document.getElementById('interfaceSecondPallet');
+        
+            if (interfaceSecondPallet.classList.contains('hidden')){
+                newInterfaceSecondPallet.classList.add('hidden');
+                interfaceSecondPallet.classList.remove('hidden');
+                interfaceSecondPallet.classList.add('flex');
+            }
             handleNewNote(noteTitle, noteContent, noteDate, pingGuy);            
         })
 
@@ -394,6 +408,7 @@ function showInterfaceMain () {
             const newNoteCreate = document.getElementById('new-note');
             if(newNoteCreate){
                 newNoteCreate.children[1].children[0].innerHTML = e.target.value;
+
                 pingGuyInsert(); 
             }else{
                 for(let i = 0; i < noteItems.length; i++){
