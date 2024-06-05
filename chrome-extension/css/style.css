@@ -7,3 +7,19 @@
 html{
       font-family: 'Work Sans';
 }
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px; /* Width of the scrollbar */
+  height: 3px; /* Height of the scrollbar */
+  /* border-radius: 12px; */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent; /* Make the track invisible */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.5); /* Color of the draggable part */
+  /* border-radius: 20px;  */
+}
+

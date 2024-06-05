@@ -37,7 +37,7 @@ async function showInterface (){
 
 const popup = `
     <div class="w-[1100px] h-[700px] flex gap-8" >
-        <div class="w-[50%]  h-full flex-col py-4 px-3 bg-[#e2dabe] rounded-xl">
+        <div class="w-[50%] overflow-y-scroll  h-full flex-col py-4 px-3 bg-[#e2dabe] rounded-xl custom-scrollbar">
             <div class="flex items-center justify-between">
                 <div class="flex gap-1.5"> 
                     <div class="rounded-full w-3 h-3 bg-red-600"></div>
@@ -152,11 +152,11 @@ function handleClick(e) {
         note.style.borderRadius = '10px';
 
         // This only works for saved data in the storage
-        // noteTitle.value = notesArray.find(note => note.id === id).title;
-        // noteContent.value = notesArray.find(note => note.id === id).content;
+        noteTitle.value = notesArray.find(note => note.id === id).title;
+        noteContent.value = notesArray.find(note => note.id === id).content;
 
-        noteTitle.value = note.children[1].children[0].textContent;
-        noteContent.value = note.children[1].children[1].textContent;
+        // noteTitle.value = note.children[1].children[0].textContent;
+        // noteContent.value = note.children[1].children[1].textContent;
     }
   }
 
