@@ -80,23 +80,30 @@ const popup = `
             </div>
 
         </div>
-        <div class="w-full relative px-5 py-4 flex-col gap-5 h-full bg-[#e2dabe] rounded-xl">
-            <p id='note-date' class="text-sm text-slate-600 mt-4font-medium">May, 10, 2024 at 6:18pm </p>
-            <input maxlength="30" placeholder="Title here..." type="text" id="note-title" class="text-3xl placeholder:text-slate-500/90 w-full font-serif bg-transparent outline-none border-none mt-2 text-slate-800 font-semibold" />
-            <textarea rows=10 cols=40 placeholder="write here..." type="text" id="note-content" class="text-base w-full resize-none bg-transparent outline-none border-none text-slate-700 leading-9 mt-4"></textarea>
+        <div id="secondPallet" class="w-full relative px-5 py-4 flex-col gap-5 h-full bg-[#e2dabe] rounded-xl">
+            <div id="newInterfaceSecondPallet" class="flex flex-col gap-5 w-full items-center justify-center h-full">
+                <h1 class="text-base text-slate-800 font-semibold">Select a note to read </h1>
+                <p class="text-sm text-slate-600">Nothing is selected</p>
+            </div>
+            
+            <div id="interfaceSecondPallet" class="hidden flex-col">
+                <p id='note-date' class="text-sm text-slate-600 mt-4font-medium">May, 10, 2024 at 6:18pm </p>
+                <input maxlength="30" placeholder="Title here..." type="text" id="note-title" class="text-3xl placeholder:text-slate-500/90 w-full font-serif bg-transparent outline-none border-none mt-2 text-slate-800 font-semibold" />
+                <textarea rows=10 cols=40 placeholder="write here..." type="text" id="note-content" class="text-base w-full resize-none bg-transparent outline-none border-none text-slate-700 leading-9 mt-4"></textarea>
 
-                <div id="buttons-list" class="flex items-center gap-6 absolute py-2 px-8 rounded-[25px] bottom-3 left-[35%]">
-                    <p class="text-base text-slate-100 font-medium cursor-pointer">Aa</p>
-                    <svg class="cursor-pointer w-[20px] h-[20px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"  id="history-alt"><path fill="white" stroke="white" stroke-width="0.4" d="M11.44,2A10,10,0,0,0,4.56,4.77V3a1,1,0,0,0-2,0V7.5a1,1,0,0,0,1,1H8.06a1,1,0,0,0,0-2H5.66A8,8,0,1,1,11.44,20a1,1,0,1,0,0,2,10,10,0,1,0,0-20Zm0,6a1,1,0,0,0-1,1v3a1,1,0,0,0,1,1h2a1,1,0,0,0,0-2h-1V9A1,1,0,0,0,11.44,8Z"></path></svg>
+                    <div id="buttons-list" class="flex items-center gap-6 absolute py-2 px-8 rounded-[25px] bottom-3 left-[35%]">
+                        <p class="text-base text-slate-100 font-medium cursor-pointer">Aa</p>
+                        <svg class="cursor-pointer w-[20px] h-[20px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"  id="history-alt"><path fill="white" stroke="white" stroke-width="0.4" d="M11.44,2A10,10,0,0,0,4.56,4.77V3a1,1,0,0,0-2,0V7.5a1,1,0,0,0,1,1H8.06a1,1,0,0,0,0-2H5.66A8,8,0,1,1,11.44,20a1,1,0,1,0,0,2,10,10,0,1,0,0-20Zm0,6a1,1,0,0,0-1,1v3a1,1,0,0,0,1,1h2a1,1,0,0,0,0-2h-1V9A1,1,0,0,0,11.44,8Z"></path></svg>
 
-                    <svg class="cursor-pointer w-[20px] h-[20px] scale-x-[-1]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="history-alt"><path fill="white" stroke="white" stroke-width="0.4" d="M11.44,2A10,10,0,0,0,4.56,4.77V3a1,1,0,0,0-2,0V7.5a1,1,0,0,0,1,1H8.06a1,1,0,0,0,0-2H5.66A8,8,0,1,1,11.44,20a1,1,0,1,0,0,2,10,10,0,1,0,0-20Zm0,6a1,1,0,0,0-1,1v3a1,1,0,0,0,1,1h2a1,1,0,0,0,0-2h-1V9A1,1,0,0,0,11.44,8Z"></path></svg>
+                        <svg class="cursor-pointer w-[20px] h-[20px] scale-x-[-1]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="history-alt"><path fill="white" stroke="white" stroke-width="0.4" d="M11.44,2A10,10,0,0,0,4.56,4.77V3a1,1,0,0,0-2,0V7.5a1,1,0,0,0,1,1H8.06a1,1,0,0,0,0-2H5.66A8,8,0,1,1,11.44,20a1,1,0,1,0,0,2,10,10,0,1,0,0-20Zm0,6a1,1,0,0,0-1,1v3a1,1,0,0,0,1,1h2a1,1,0,0,0,0-2h-1V9A1,1,0,0,0,11.44,8Z"></path></svg>
 
-                    <div class="relative">
-                        <span id="ping-guy" class="animate-ping absolute right-0 -top-1 hidden h-2 w-2 rounded-full bg-red-500 opacity-75"></span>
-                        <svg class="cursor-pointer w-[20px] h-[20px]" xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 0 24 24" id="save"><path fill="white" stroke="white" stroke-width="0.4" d="m20.71 9.29-6-6a1 1 0 0 0-.32-.21A1.09 1.09 0 0 0 14 3H6a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3v-8a1 1 0 0 0-.29-.71ZM9 5h4v2H9Zm6 14H9v-3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1Zm4-1a1 1 0 0 1-1 1h-1v-3a3 3 0 0 0-3-3h-4a3 3 0 0 0-3 3v3H6a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V6.41l4 4Z"></path></svg>
+                        <div class="relative">
+                            <span id="ping-guy" class="animate-ping absolute right-0 -top-1 hidden h-2 w-2 rounded-full bg-red-500 opacity-75"></span>
+                            <svg class="cursor-pointer w-[20px] h-[20px]" xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 0 24 24" id="save"><path fill="white" stroke="white" stroke-width="0.4" d="m20.71 9.29-6-6a1 1 0 0 0-.32-.21A1.09 1.09 0 0 0 14 3H6a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3v-8a1 1 0 0 0-.29-.71ZM9 5h4v2H9Zm6 14H9v-3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1Zm4-1a1 1 0 0 1-1 1h-1v-3a3 3 0 0 0-3-3h-4a3 3 0 0 0-3 3v3H6a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V6.41l4 4Z"></path></svg>
+                        </div>
+
+                        <svg class="cursor-pointer w-[20px] h-[20px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"  id="trash-alt"><path fill="white" stroke="white" stroke-width="0.4" d="M10,18a1,1,0,0,0,1-1V11a1,1,0,0,0-2,0v6A1,1,0,0,0,10,18ZM20,6H16V5a3,3,0,0,0-3-3H11A3,3,0,0,0,8,5V6H4A1,1,0,0,0,4,8H5V19a3,3,0,0,0,3,3h8a3,3,0,0,0,3-3V8h1a1,1,0,0,0,0-2ZM10,5a1,1,0,0,1,1-1h2a1,1,0,0,1,1,1V6H10Zm7,14a1,1,0,0,1-1,1H8a1,1,0,0,1-1-1V8H17Zm-3-1a1,1,0,0,0,1-1V11a1,1,0,0,0-2,0v6A1,1,0,0,0,14,18Z"></path></svg>
                     </div>
-
-                    <svg class="cursor-pointer w-[20px] h-[20px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"  id="trash-alt"><path fill="white" stroke="white" stroke-width="0.4" d="M10,18a1,1,0,0,0,1-1V11a1,1,0,0,0-2,0v6A1,1,0,0,0,10,18ZM20,6H16V5a3,3,0,0,0-3-3H11A3,3,0,0,0,8,5V6H4A1,1,0,0,0,4,8H5V19a3,3,0,0,0,3,3h8a3,3,0,0,0,3-3V8h1a1,1,0,0,0,0-2ZM10,5a1,1,0,0,1,1-1h2a1,1,0,0,1,1,1V6H10Zm7,14a1,1,0,0,1-1,1H8a1,1,0,0,1-1-1V8H17Zm-3-1a1,1,0,0,0,1-1V11a1,1,0,0,0-2,0v6A1,1,0,0,0,14,18Z"></path></svg>
                 </div>
 
         </div>
@@ -106,6 +113,15 @@ const popup = `
 
 
 function handleClick(e) {
+    const newInterfaceSecondPallet = document.getElementById('newInterfaceSecondPallet');
+    const interfaceSecondPallet = document.getElementById('interfaceSecondPallet');
+
+    if (interfaceSecondPallet.classList.contains('hidden')){
+        newInterfaceSecondPallet.classList.add('hidden');
+        interfaceSecondPallet.classList.remove('hidden');
+        interfaceSecondPallet.classList.add('flex');
+    }
+
     e.stopPropagation();
 
     const id = Number(e.currentTarget.id) || e.target.id;
@@ -134,6 +150,11 @@ function handleClick(e) {
         note.dataset.selected = 'true';
         note.style.backgroundColor = 'rgb(168 161 135)';
         note.style.borderRadius = '10px';
+
+        // This only works for saved data in the storage
+        // noteTitle.value = notesArray.find(note => note.id === id).title;
+        // noteContent.value = notesArray.find(note => note.id === id).content;
+
         noteTitle.value = note.children[1].children[0].textContent;
         noteContent.value = note.children[1].children[1].textContent;
     }
@@ -179,6 +200,49 @@ function handleDeleteNote(id) {
     });
 }
 
+function debounce(callback, delay) {
+    console.log('i am in debounce')
+    let timeout;
+
+    return function () {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => {
+            callback.apply(this, arguments);
+        }, delay);
+    };
+}
+
+function saveNote() {
+    const noteTitle = document.getElementById('note-title');
+    const noteContent = document.getElementById('note-content');
+    const noteDate = document.getElementById('note-date');
+    const pingGuy = document.getElementById('ping-guy');
+
+    const selectedNote = document.querySelector('.note-item[data-selected="true"]');
+    const id = Number(selectedNote.id) 
+    console.log(id)
+
+    const updatedNote = {
+        id,
+        title: noteTitle.value,
+        content: noteContent.value,
+        date: noteDate.textContent
+    };
+
+    const index = notesArray.findIndex(note => note.id === id);
+    notesArray[index] = updatedNote;
+
+    console.log('about to save')
+
+    chrome.storage.sync.set({ notes: notesArray }, () => {
+        console.log('Note saved');
+    });
+
+    pingGuy.classList.remove('inline-flex');
+    pingGuy.classList.add('hidden');
+}
+
+const debouncedSaveNote = debounce(saveNote, 1000);
 
 function showInterfaceMain () {
     let mainContainer = window.document.createElement('div');
@@ -206,6 +270,7 @@ function showInterfaceMain () {
         const saveButton = window.document.getElementById('save');
         const deleteButton = window.document.getElementById('trash-alt');
         const searchButton = window.document.getElementById('searchNote')
+        const noteSpread = window.document.getElementById('note-spread');
 
         const pingGuyInsert = () =>{
             if(pingGuy.classList.contains('inline-flex')){
@@ -225,9 +290,11 @@ function showInterfaceMain () {
             }}
 
         if(latestNote){
-            noteTitle.value = latestNote.title;
-            noteContent.value = latestNote.content;
-            // noteDate.innerHTML = latestNote.date;
+            // if(latestNote.title === 'New Note' && latestNote.content === 'Write here...'){
+            //     console.log('there is a new note')
+            //     handleNewNote(noteTitle, noteContent, noteDate, pingGuy);
+            // }
+
         }else{
             console.log('there is no new note')
            handleNewNote(noteTitle, noteContent, noteDate, pingGuy);
@@ -325,13 +392,34 @@ function showInterfaceMain () {
         
         noteTitle.addEventListener('input', (e) => {
             const newNoteCreate = document.getElementById('new-note');
-            newNoteCreate.children[1].children[0].innerHTML = e.target.value;
-            pingGuyInsert();            
+            if(newNoteCreate){
+                newNoteCreate.children[1].children[0].innerHTML = e.target.value;
+                pingGuyInsert(); 
+            }else{
+                for(let i = 0; i < noteItems.length; i++){
+                    if(noteItems[i].dataset.selected === 'true'){
+                        noteItems[i].children[1].children[0].innerHTML = e.target.value;
+                        pingGuyInsert();
+                    }
+                }
+            }
+            debouncedSaveNote();
         })
+
         noteContent.addEventListener('input', (e) => {
-            const newNoteCreate = document.getElementById('new-note');
-            newNoteCreate.children[1].children[1].innerHTML = e.target.value.slice(0, 75);
-            pingGuyInsert();
+            const newNoteCreate = document.getElementById('new-note'); 
+            if(newNoteCreate){
+                newNoteCreate.children[1].children[1].innerHTML = e.target.value;
+                pingGuyInsert();
+            }else{
+                for(let i = 0; i < noteItems.length; i++){
+                    if(noteItems[i].dataset.selected === 'true'){
+                        noteItems[i].children[1].children[1].innerHTML = e.target.value;
+                        pingGuyInsert();
+                    }
+                }
+            }
+            debouncedSaveNote();
         })
 
     }else{
