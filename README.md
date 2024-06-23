@@ -1,4 +1,4 @@
-# prompt_jot
+# prompt-jot
 Prompt Jot is a simplee note-taking application designed to streamline the process of capturing thoughts, ideas, and reminders across multiple platforms.
 
 ## Build directory structure
