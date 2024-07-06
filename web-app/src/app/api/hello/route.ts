@@ -39,8 +39,8 @@ export async function GET(request: any) {
 
         return NextResponse.json({
             client_ip: ip,
-            location: `You are in ${city}, ${country}`,
-            greeting: `Hello ${name}! The temperature is ${temperature} degrees Celsius`,
+            location: `${city}`,
+            greeting: `Hello ${name}! The temperature is ${temperature} degrees Celsius in ${city}`,
         }, { status: 200 });
 
     } catch (error: any) {

@@ -19,6 +19,41 @@ function getNotesFromStorage() {
     });
 }
 
+document.addEventListener('mouseup', () => {
+    const selectedText = window.getSelection().toString();
+    const infoId = document.getElementById('highlight-info');
+  
+    if(infoId){
+        infoId.style.display = 'block';
+    }else{
+        const highlightInfo = `
+        <div id="highlight-info" class="absolute bg-white shadow-md p-4 rounded-md">
+            <p id="highlighted-text" class="text-sm text-gray-800">Ask</p>
+        </div>
+    `
+        body.insertAdjacentHTML('beforeend', highlightInfo);
+    }
+    console.log('i am done')
+});
+
+document.addEventListener('selectionchange', () => {
+    const selectedText = window.getSelection().toString();
+    console.log('new selected text', selectedText)
+    const highlightInfo = document.getElementById('highlight-info');
+    console.log('highlight content', highlightInfo)
+    
+    if (selectedText.length > 5 && !highlightInfo) {
+        const highlightInfo = `
+        <div id="highlight-info" class="absolute bg-white shadow-md p-4 rounded-md">
+            <p id="highlighted-text" class="text-sm text-gray-800">${selectedText}</p>
+        </div>
+    `
+        body.insertAdjacentHTML('beforeend', highlightInfo);
+    }else{
+        return;
+    }
+});
+
 const search = new MiniSearch({
     fields: ['title', 'content'],
     storeFields: ['title', 'content', 'date']
@@ -416,7 +451,7 @@ function showInterfaceMain () {
                 interfaceSecondPallet.classList.add('flex');
             }
             handleNewNote(noteTitle, noteContent, noteDate, pingGuy);            
-        })
+        })     
 
         
         noteTitle.addEventListener('input', (e) => {

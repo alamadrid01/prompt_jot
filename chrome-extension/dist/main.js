@@ -6869,6 +6869,29 @@
       });
     });
   }
+  document.addEventListener('mouseup', function () {
+    window.getSelection().toString();
+    var infoId = document.getElementById('highlight-info');
+    if (infoId) {
+      infoId.style.display = 'block';
+    } else {
+      var highlightInfo = "\n        <div id=\"highlight-info\" class=\"absolute bg-white shadow-md p-4 rounded-md\">\n            <p id=\"highlighted-text\" class=\"text-sm text-gray-800\">Ask</p>\n        </div>\n    ";
+      body.insertAdjacentHTML('beforeend', highlightInfo);
+    }
+    console.log('i am done');
+  });
+  document.addEventListener('selectionchange', function () {
+    var selectedText = window.getSelection().toString();
+    console.log('new selected text', selectedText);
+    var highlightInfo = document.getElementById('highlight-info');
+    console.log('highlight content', highlightInfo);
+    if (selectedText.length > 5 && !highlightInfo) {
+      var _highlightInfo = "\n        <div id=\"highlight-info\" class=\"absolute bg-white shadow-md p-4 rounded-md\">\n            <p id=\"highlighted-text\" class=\"text-sm text-gray-800\">".concat(selectedText, "</p>\n        </div>\n    ");
+      body.insertAdjacentHTML('beforeend', _highlightInfo);
+    } else {
+      return;
+    }
+  });
   var search = new MiniSearch({
     fields: ['title', 'content'],
     storeFields: ['title', 'content', 'date']
